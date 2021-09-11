@@ -1,5 +1,6 @@
+const purge = process.env.NODE_ENV === "production" ? true : false;
 module.exports = {
-  purge: [],
+  purge: { enabled: purge, content: ["./views/**/*.ejs", "./public/**/*.js"] },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
