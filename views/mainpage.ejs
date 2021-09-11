@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./style.css" />
+
+    <title>Meet</title>
+  </head>
+  <style>
+    .custom-shape-divider-bottom-1630072627 {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      transform: rotate(180deg);
+    }
+
+    .custom-shape-divider-bottom-1630072627 svg {
+      position: relative;
+      display: block;
+      width: calc(113% + 1.3px);
+      height: 136px;
+      transform: rotateY(180deg);
+    }
+
+    .custom-shape-divider-bottom-1630072627 .shape-fill {
+      fill: #ffffff;
+    }
+    ::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      background-color: #f5f5f5;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      background-color: #f5f5f5;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #3c4043;
+    }
+  </style>
+  <body>
+    <nav class="w-full">
+      <nav
+        class="
+          h-10v
+          bg-gray-200 bg-opacity-20
+          flex
+          items-center
+          justify-between
+          absolute
+          w-100
+          z-50
+        "
+      >
+        <span class="text-2xl ml-4 text-white">Meet</span>
+        <div class="navbar-time text-2xl text-white">9:54 • Wed 18-6-21</div>
+        <button class="sign-in-btn rounded bg-blue-500 text-white p-2 mr-4">
+          Đăng nhập
+        </button>
+        <div class="flex items-center sign-out-btn">
+          <img
+            src="https://i.imgur.com/twdDP9U.jpg"
+            alt=""
+            class="rounded-full w-16 h-16 p-2 mr-2 profile-photo"
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-7 w-7 text-white mr-3"
+            onclick="signOut()"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+            />
+          </svg>
+        </div>
+      </nav>
+    </nav>
+
+    <div class="h-100v text-center z-20">
+      <video
+        src="https://res.cloudinary.com/ddhhlt25y/video/upload/v1630122450/bg_pqjdfr.mp4"
+        autoplay
+        loop
+        muted
+        class="top-0 object-cover h-100v w-full"
+      ></video>
+
+      <div class="absolute top-24 w-full">
+        <h1 class="text-6xl pt-40 text-white">Cuộc họp video miễn phí</h1>
+        <h1 class="text-6xl pt-3 text-white">Dành cho mọi người</h1>
+
+        <button
+          class="bg-green-500 text-white p-3 rounded mt-10 text-lg"
+          onclick="createRoom()"
+        >
+          Cuộc họp mới
+        </button>
+        <span class="ml-5 mr-5 text-xl text-white">Hoặc</span>
+        <button
+          href="/createroom"
+          class="bg-green-500 text-white p-3 rounded mt-10 text-lg"
+          onclick="joinRoom()"
+        >
+          Tham gia 1 cuộc họp
+        </button>
+      </div>
+
+      <div class="custom-shape-divider-bottom-1630072627">
+        <svg
+          data-name="Layer 1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+            class="shape-fill"
+          ></path>
+        </svg>
+      </div>
+      <!-- New Room Modal -->
+      <div class="modal fade" id="newMeet">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Cuộc họp mới</h4>
+              <button type="button" class="close" data-dismiss="modal">
+                &times;
+              </button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div class="form-group flex items-center">
+                <span class="mr-2">Tạo Mật Khẩu:</span>
+                <input type="text" class="form-control w-80" id="password" />
+              </div>
+              <div class="form-group flex items-center">
+                <span class="mr-2">Nhập lại mật Khẩu:</span>
+                <input type="text" class="form-control w-72" id="repassword" />
+              </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button
+                class="bg-red-500 rounded h-10 pl-2 pr-2 text-white"
+                data-dismiss="modal"
+              >
+                Huỷ
+              </button>
+              <button
+                type="button"
+                class="bg-primary rounded h-10 pl-2 pr-2 text-white"
+                onclick="createRoom()"
+              >
+                Tham Gia
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="joinMeet">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Tham gia cuộc họp</h4>
+              <button type="button" class="close" data-dismiss="modal">
+                &times;
+              </button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div class="form-group flex items-center">
+                <span class="mr-2">ID phòng:</span>
+                <input type="text" class="form-control w-80" id="roomid" />
+              </div>
+              <div class="form-group flex items-center">
+                <span class="mr-2">Mật Khẩu:</span>
+                <input
+                  type="text"
+                  class="form-control w-80"
+                  id="passwordjoin"
+                />
+              </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button
+                class="bg-red-500 rounded h-10 pl-2 pr-2 text-white"
+                data-dismiss="modal"
+              >
+                Huỷ
+              </button>
+              <button
+                type="button"
+                class="bg-primary rounded h-10 pl-2 pr-2 text-white"
+                onclick="joinRoom()"
+              >
+                Tham Gia
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur quam
+      enim laboriosam distinctio odio aliquid laborum, placeat expedita
+      aspernatur. Ad!
+    </div>
+  </body>
+  <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-auth-compat.js"></script>
+  <script src="./mainpage.js"></script>
+</html>
