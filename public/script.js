@@ -242,5 +242,3 @@ mute.addEventListener("click", checkMute);
 camera.addEventListener("click", checkCam);
 sharescreen.addEventListener("click", checkShare);
 leave.addEventListener("click", checkQuit);
-
-// ! Firebase
