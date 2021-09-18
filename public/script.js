@@ -109,10 +109,7 @@ let addVideoStream = (video, stream) => {
     "class",
     "h-48 w-64 rounded-xl bg-primary flex justify-center items-center m-6"
   );
-  let div = document.createElement("div");
-  div.innerHTML = "<h1>hi</h1>";
-  div.append(video);
-  streamGrid.append(div);
+  streamGrid.append(video);
   countPeople();
 };
 
