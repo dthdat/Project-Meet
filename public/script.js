@@ -11,6 +11,7 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebaseApp.firestore();
 const auth = firebaseApp.auth();
 const roomdb = db.collection("room");
+var displayName;
 
 let initWeb = () => {
   firebase.auth().onAuthStateChanged((user) => {
@@ -18,6 +19,7 @@ let initWeb = () => {
       alert("Bạn phải đăng nhập trước khi sử dụng.");
       window.location.href = "/";
     } else {
+      displayName = user.displayName;
       roomdb
         .doc(ROOM_ID)
         .get()
@@ -133,7 +135,12 @@ socket.on("user-disconnected", (userId) => {
 let msg = document.getElementById("inputChat");
 document.addEventListener("keydown", (e) => {
   if (e.keyCode === 13 && msg.value.length !== 0) {
-    socket.emit("message", msg.value);
+    console.log(displayName);
+    let message = {
+      name: displayName,
+      msg: msg.value,
+    };
+    socket.emit("message", message);
     msg.value = "";
   }
 });
@@ -147,10 +154,10 @@ socket.on("createMsg", (message) => {
   msg.innerHTML = `
   <div class="pb-2">
     <span class="chat-user text-white mr-5 ml-2 font-bold"
-      >Đỗ Thành Đạt</span>
+      >${message.name}</span>
     <span class="chat-time text-white">${d.getHours()}:${d.getMinutes()}</span>
   </div>
-    <span class="chat-content text-white ml-2">${message}</span>
+    <span class="chat-content text-white ml-2">${message.msg}</span>
   `;
   // Append to container
   let chatContainer = document.querySelector(".chat-container");
@@ -185,6 +192,15 @@ let setTime = () => {
   }, 1000);
 };
 document.addEventListener("DOMContentLoaded", setTime);
+
+let startScreenShare = () => {
+  navigator.mediaDevices.getDisplayMedia({ video: true }).then((stream) => {
+    myVideoStream = stream;
+    let video = document.createElement("video");
+    myScreenShare.muted = true;
+    addVideoStream(video, stream);
+  });
+};
 
 // !Button States
 // ? Variables and Functions
@@ -224,10 +240,12 @@ let checkShare = () => {
     // Tailwind
     sharescreen.classList.add("bg-primary", "hover:bg-gray-600");
     sharescreen.classList.remove("active", "bg-red-500", "hover:bg-red-600");
+    // stopScreenShare();
   } else {
     // Tailwind
     sharescreen.classList.add("active", "bg-red-500", "hover:bg-red-700");
     sharescreen.classList.remove("bg-primary", "hover:bg-gray-600");
+    startScreenShare();
   }
 };
 
