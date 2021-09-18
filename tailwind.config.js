@@ -23,7 +23,7 @@ module.exports = {
       primary: "#3c4043",
       secondary: "#202124",
       danger: "#e3342f",
-      chatbox: "#40444B",
+      chatbox: "#F3F3F5",
     }),
   },
   plugins: [],

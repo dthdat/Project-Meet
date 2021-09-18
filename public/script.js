@@ -58,6 +58,12 @@ let initWeb = () => {
   });
 };
 
+let countPeople = () => {
+  let peopleCount = document.querySelector(".people-count");
+  let count = streamGrid.childElementCount;
+  peopleCount.innerHTML = count;
+};
+
 document.addEventListener("DOMContentLoaded", initWeb);
 // ! Socket.io And PeerJs
 const socket = io("/");
@@ -103,8 +109,11 @@ let addVideoStream = (video, stream) => {
     "class",
     "h-48 w-64 rounded-xl bg-primary flex justify-center items-center m-6"
   );
-
-  streamGrid.append(video);
+  let div = document.createElement("div");
+  div.innerHTML = "<h1>hi</h1>";
+  div.append(video);
+  streamGrid.append(div);
+  countPeople();
 };
 
 peer.on("open", (id) => {
@@ -121,6 +130,7 @@ let connectToNewUser = (userId, stream) => {
   });
   call.on("close", () => {
     video.remove();
+    countPeople();
   });
 
   peers[userId] = call;
@@ -129,6 +139,7 @@ let connectToNewUser = (userId, stream) => {
 socket.on("user-disconnected", (userId) => {
   if (peers[userId]) {
     peers[userId].close();
+    countPeople();
   }
 });
 
@@ -148,16 +159,25 @@ document.addEventListener("keydown", (e) => {
 socket.on("createMsg", (message) => {
   // Get time send
   const d = new Date();
+  let time;
+  if (d.getMinutes() < 10) {
+    time = `${d.getHours()}:0${d.getMinutes()}`;
+  } else {
+    time = `${d.getHours()}:${d.getMinutes()}`;
+  }
   // Create message element
   const msg = document.createElement("div");
-  msg.setAttribute("class", "chat-div flex flex-col mb-5");
+  msg.setAttribute(
+    "class",
+    "chat-div flex flex-col mb-2 rounded bg-chatbox m-1 p-1"
+  );
   msg.innerHTML = `
-  <div class="pb-2">
-    <span class="chat-user text-white mr-5 ml-2 font-bold"
+  <div class="pb-2 ">
+    <span class="chat-user  mr-5 ml-2 font-bold"
       >${message.name}</span>
-    <span class="chat-time text-white">${d.getHours()}:${d.getMinutes()}</span>
+    <span class="chat-time ">${time}</span>
   </div>
-    <span class="chat-content text-white ml-2">${message.msg}</span>
+    <span class="chat-content  ml-2">${message.msg}</span>
   `;
   // Append to container
   let chatContainer = document.querySelector(".chat-container");
@@ -195,7 +215,7 @@ document.addEventListener("DOMContentLoaded", setTime);
 
 let startScreenShare = () => {
   navigator.mediaDevices.getDisplayMedia({ video: true }).then((stream) => {
-    myVideoStream = stream;
+    myScreenShare = stream;
     let video = document.createElement("video");
     myScreenShare.muted = true;
     addVideoStream(video, stream);
@@ -255,6 +275,7 @@ let checkQuit = () => {
     window.location.href = "/";
   }
 };
+
 // ? Event Listeners
 mute.addEventListener("click", checkMute);
 camera.addEventListener("click", checkCam);

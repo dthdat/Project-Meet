@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Meet</title>
+    <title>Hangout</title>
+    <link rel="icon" type="image/png" href="https://i.imgur.com/mnjnu0L.png" />
 
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../index.css" />
@@ -44,7 +45,21 @@
           rounded
         "
       >
-        <a href="/">Meet</a>
+        <div class="flex ml-2 items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <span class="pl-1 people-count">0</span>
+        </div>
         <span class="taskbar-code"><%=roomId%></span>
         <span class="taskbar-clock">09:35</span>
       </div>
@@ -171,7 +186,18 @@
         </div>
       </div>
     </div>
-    <div class="chatbox h-100v border-l-2 rounded border-black w-1/5 inline">
+    <div
+      class="
+        chatbox
+        h-100v
+        border-l-2
+        rounded
+        border-black
+        w-1/5
+        inline
+        bg-white
+      "
+    >
       <div
         class="
           taskbar
@@ -179,18 +205,29 @@
           flex
           justify-center
           items-center
-          bg-primary
+          bg-gray-300
           m-5
           rounded
+          border-black border-2
         "
       >
-        <span>Chat</span>
+        <span style="color: black">Chat</span>
       </div>
       <div class="chat-container overflow-auto h-80v"></div>
       <div class="chat-input absolute bottom-0 mb-5">
         <input
           type="text"
-          class="rounded w-72 h-10 pl-1 ml-2 pr-7 bg-chatbox text-white"
+          class="
+            rounded
+            w-72
+            h-10
+            pl-1
+            ml-2
+            pr-7
+            bg-chatbox
+            text-black
+            border-black border-2
+          "
           id="inputChat"
           placeholder="Type Something..."
         />
